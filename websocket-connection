@@ -1,0 +1,16 @@
+import json
+import boto3
+import os
+
+dynamodb = boto3.client('dynamodb')
+
+def lambda_handler(event,context):
+    connectionId = event['requestcontext']['connectionId']
+
+    dynamodb.put_item(
+        tableName=os.environ['websocket_table'],
+        Item={'connectionId':{'s':connectionId}}
+    )
+
+
+    return{}
